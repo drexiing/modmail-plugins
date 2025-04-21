@@ -25,10 +25,10 @@ logger = getLogger(__name__)
 
 
 _default_config: Dict[str, Any] = {
-    "confirm_button_accept_label": None,
+    "confirm_button_accept_label": "Confirmar",
     "confirm_button_accept_emoji": None,
     "confirm_button_accept_style": discord.ButtonStyle.green.value,
-    "confirm_button_deny_label": None,
+    "confirm_button_deny_label": "Cancelar",
     "confirm_button_deny_emoji": None,
     "confirm_button_deny_style": discord.ButtonStyle.red.value,
     "developer_channel": None,

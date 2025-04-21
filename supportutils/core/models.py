@@ -98,6 +98,7 @@ class ContactManager:
         *,
         category: discord.CategoryChannel = None,
         interaction: Optional[discord.Interaction] = None,
+        mention: String = None,
     ) -> Thread:
         """
         Thread creation that was initiated by successful interaction on Contact Menu.
@@ -109,7 +110,7 @@ class ContactManager:
             # just send error message and return
             embed = discord.Embed(
                 color=self.bot.error_color,
-                description="A thread for you already exists.",
+                description="Ya has creado un ticket.",
             )
             await interaction.followup.send(embed=embed, ephemeral=True)
             return
@@ -123,7 +124,19 @@ class ContactManager:
             color=self.bot.main_color,
         )
         embed.set_footer(text=f"{recipient}", icon_url=recipient.display_avatar.url)
-        message = await recipient.send(embed=embed)
+        try:
+            message = await recipient.send(embed=embed)
+        except:
+            embed = discord.Embed(
+                color=self.bot.error_color,
+                description=(
+                    "No se pudo crear tu ticket. "
+                    "Por favor, verifica que tienes los mensajes directos habilitados para recibirlo correctamente."
+                ),
+            )
+            await interaction.followup.send(embed=embed, ephemeral=True)
+            del self.bot.threads.cache[recipient.id]
+            return
         self.bot.loop.create_task(thread.setup(creator=recipient, category=category, initial_message=message))
         del embed
 
@@ -133,7 +146,7 @@ class ContactManager:
             color=self.bot.main_color,
         )
         await thread.wait_until_ready()
-        await thread.channel.send(embed=embed)
+        await thread.channel.send(content=mention, embed=embed)
 
 
 class Feedback:

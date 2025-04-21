@@ -15,6 +15,9 @@ _default_config: Dict[str, Any] = {
     "contact": {
         "message": None,
         "channel": None,
+        "ds_mention": None,
+        "kick_mention": None,
+        "cc_mention": None,
         "embed": {
             "title": "Contact Staff",
             "description": "Use button or dropdown below to contact our staff.",
@@ -23,7 +26,7 @@ _default_config: Dict[str, Any] = {
         "button": {},
         "select": {
             "options": [],
-            "placeholder": "Choose a category",
+            "placeholder": "Categorías de Ticket",
         },
         "override_dmdisabled": False,
         "confirmation": {

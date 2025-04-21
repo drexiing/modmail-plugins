@@ -177,18 +177,15 @@ class ContactView(BaseView):
         thread = self.manager.find_thread(user)
         embed = discord.Embed(color=self.bot.error_color)
         if thread:
-            content = "A thread for you already exists"
-            if thread.channel:
-                content += f" in {thread.channel.mention}"
-            content += "."
+            content = "Ya has creado un ticket."
             embed.description = content
         elif await self.bot.is_blocked(user):
-            embed.description = f"You are currently blocked from contacting {self.bot.user.name}."
+            embed.description = f"Estás bloqueado para contactar al bot de Soporte."
         elif (
             self.bot.config["dm_disabled"] == DMDisabled.NEW_THREADS
             and not self.manager.config.get("override_dmdisabled")
         ) or self.bot.config["dm_disabled"] == DMDisabled.ALL_THREADS:
-            embed.description = self.bot.config["disabled_new_thread_response"]
+            embed.description = f"Debes tener los mensajes privados abiertos para contactar al bot de Soporte."
             logger.info(
                 "A new thread using contact menu was blocked from %s due to disabled Modmail.",
                 user,
@@ -207,7 +204,11 @@ class ContactView(BaseView):
     ) -> None:
         view = select.view
         view.inputs["contact_option"] = option
-        await interaction.response.defer()
+        if view.accept_button.disabled:
+            view.accept_button.disabled = False
+            await interaction.response.edit_message(view=view)
+        else:
+            await interaction.response.defer()
 
     async def handle_interaction(self, interaction: Interaction, button: Button) -> None:
         """
@@ -231,6 +232,7 @@ class ContactView(BaseView):
                 placeholder=self.manager.config["select"].get("placeholder"),
                 callback=self._category_select_callback,
             )
+            view.accept_button.disabled = True
             view.add_item(dropdown)
             view.add_item(view.accept_button)
             view.add_item(view.deny_button)
@@ -262,6 +264,12 @@ class ContactView(BaseView):
                 if data.get("label") == option.label:
                     category_id = data.get("category")
                     break
+            if option.label == "Contactar al soporte de Discord":
+                mention = self.manager.config["ds_mention"]
+            elif option.label == "Contactar al soporte de Twitch/Kick":
+                mention = self.manager.config["kick_mention"]
+            elif option.label == "Soporte de Carre Coins":  
+                mention = self.manager.config["cc_mention"]
             if category_id is None:
                 raise ValueError(f"Category ID for {option.label} was not set.")
             category = self.bot.get_channel(int(category_id))
@@ -269,7 +277,7 @@ class ContactView(BaseView):
                 # just log, the thread will be created in main category
                 logger.error(f"Category with ID {category_id} not found.")
 
-        await self.manager.create_thread(user, category=category, interaction=view.interaction)
+        await self.manager.create_thread(user, category=category, interaction=view.interaction, mention=mention)
         self._temp_cached_users.pop(str(user.id), None)
 
     async def force_stop(self) -> None:
