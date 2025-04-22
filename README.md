@@ -3,7 +3,7 @@
 Este es un fork personalizado del repositorio original de Modmail Plugins, adaptado específicamente para el servidor de Discord de [CARRETERA ARMY](https://discord.com/invite/carreraaa).
 Se han incluido únicamente los plugins Support Utility y Extended Utils, ambos modificados para ajustarse a las necesidades del servidor. Además, se ha desarrollado un plugin completamente nuevo: Utility, que incorpora comandos adicionales para facilitar la gestión del bot de soporte.
 
-## Plugin Creado
+## Plugin Custom Incorporado
 
 ### Utility
 
