@@ -12,6 +12,7 @@
     "version": "1.0.0",
     "bot_version": "4.0.0",
     "dpy_version": "2.0.0",
+    "cogs_required": ["Extended Utils"],
     "requirements": [
         "aiohappyeyeballs==2.6.1", "aiohttp==3.11.18", "aiosignal==1.3.2",
         "attrs==25.3.0", "frozenlist==1.6.0", "idna==3.10",
