@@ -12,5 +12,5 @@
     "version": "1.0.0",
     "bot_version": "4.0.0",
     "dpy_version": "2.0.0",
-    "requirements": ["aiohttp==3.11.17"]
+    "requirements": ["aiohttp==3.11.18"]
 }
