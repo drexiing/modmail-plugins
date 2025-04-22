@@ -33,7 +33,7 @@ async def update_menu(menu, steps, current_step_index):
             lines.append(f"- {step}")
     await menu.edit(content="\n".join(lines))
 
-class Utility(commands.Cog, name=__plugin_name__):
+class CarreraUtils(commands.Cog, name=__plugin_name__):
     __doc__ = __description__
     
     def __init__(self, bot: ModmailBot):
@@ -254,4 +254,4 @@ class Utility(commands.Cog, name=__plugin_name__):
             await ctx.reply("Formato inválido de embed, vuelve a intentarlo.")
          
 async def setup(bot: ModmailBot)  -> None:
-    await bot.add_cog(Utility(bot))
+    await bot.add_cog(CarreraUtils(bot))
