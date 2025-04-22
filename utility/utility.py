@@ -1,13 +1,21 @@
 import io
+import json
 import aiohttp
 import discord
 
 from discord.ext import commands
 from urllib.parse import urlparse
+from pathlib import Path
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from bot import ModmailBot
+
+info_json = Path(__file__).parent.resolve() / "info.json"
+with open(info_json, encoding="utf-8") as f:
+    __plugin_info__ = json.loads(f.read())
+
+__plugin_name__ = __plugin_info__["name"]
 
 async def update_menu(menu, steps, current_step_index):
     lines = ["**Menú de creación de embed**"]
