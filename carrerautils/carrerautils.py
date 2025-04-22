@@ -203,7 +203,7 @@ class CarreraUtils(commands.Cog, name=__plugin_name__):
                             color = await colour.convert(self, ctx, argument=msg.content)
                         except commands.BadArgument:
                             if msg.content == "skip":
-                                color = int("ff921f", 16)
+                                color = int("34be22", 16)
                             else:
                                 await ctx.reply("Color inválido. Intenta con `#hex`, `0xhex` o `rgb(...)`.")
                                 msg = await self.bot.wait_for("message", check=check, timeout=60.0)
