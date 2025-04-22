@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import io
 import json
 import aiohttp
@@ -5,6 +7,7 @@ import discord
 
 from discord.ext import commands
 from urllib.parse import urlparse
+
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -16,6 +19,8 @@ with open(info_json, encoding="utf-8") as f:
     __plugin_info__ = json.loads(f.read())
 
 __plugin_name__ = __plugin_info__["name"]
+__version__ = __plugin_info__["version"]
+__description__ = "\n".join(__plugin_info__["description"]).format(__plugin_info__["wiki"], __version__)
 
 async def update_menu(menu, steps, current_step_index):
     lines = ["**Menú de creación de embed**"]
@@ -29,6 +34,8 @@ async def update_menu(menu, steps, current_step_index):
     await menu.edit(content="\n".join(lines))
 
 class Utility(commands.Cog, name=__plugin_name__):
+    __doc__ = __description__
+    
     def __init__(self, bot: ModmailBot):
         self.bot: ModmailBot = bot
 
