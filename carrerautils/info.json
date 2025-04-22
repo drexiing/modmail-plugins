@@ -2,10 +2,6 @@
     "name": "Carrera Utils",
     "description": [
         "Comandos adicionales para mejorar la experiencia de soporte.\n",
-        "**Funciones:**",
-        "- Comando `say`: Envía mensajes, archivos o stickers como el bot a un canal especificado.",
-        "- Comando `embed`: Crea y envía mensajes embebidos con pasos guiados.",
-        "- Comando `sync`: Sincroniza los comandos de aplicación del bot manualmente.",
         "\n**Versión:**\n`1.0.0`"
     ],
     "authors": ["drexiing"],
