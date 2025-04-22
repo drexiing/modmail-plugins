@@ -4,6 +4,10 @@ import discord
 
 from discord.ext import commands
 from urllib.parse import urlparse
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from bot import ModmailBot
 
 async def update_menu(menu, steps, current_step_index):
     lines = ["**Menú de creación de embed**"]
@@ -16,9 +20,9 @@ async def update_menu(menu, steps, current_step_index):
             lines.append(f"- {step}")
     await menu.edit(content="\n".join(lines))
 
-class Utility(commands.Cog):
-    def __init__(self, bot):
-        self.bot = bot
+class Utility(commands.Cog, name=__plugin_name__):
+    def __init__(self, bot: ModmailBot):
+        self.bot: ModmailBot = bot
 
     @commands.command()
     @commands.guild_only()
@@ -234,5 +238,5 @@ class Utility(commands.Cog):
         if isinstance(err, commands.CommandInvokeError):
             await ctx.reply("Formato inválido de embed, vuelve a intentarlo.")
          
-async def setup(bot: commands.Bot):
+async def setup(bot: ModmailBot)  -> None:
     await bot.add_cog(Utility(bot))
