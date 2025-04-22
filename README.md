@@ -1,7 +1,16 @@
 # Modmail Plugins
 
-Este es un fork del repositorio de Modmail Plugins en que se utilizan únicamente los plugins de Support Utility y Extended Utils. Estos plugins han sido modificados con tal de incorporarlos al bot de Soporte del servidor de Discord de la [CARRETERA ARMY](https://discord.com/invite/carreraaa) y agregarle más características únicas.
-Los plugins que han sido creados desde cero y no corresponden al repositorio original son los plugins de Embed, Say y Sync.
+Este es un fork personalizado del repositorio original de Modmail Plugins, adaptado específicamente para el servidor de Discord de [CARRETERA ARMY](https://discord.com/invite/carreraaa).
+Se han incluido únicamente los plugins Support Utility y Extended Utils, ambos modificados para ajustarse a las necesidades del servidor. Además, se ha desarrollado un plugin completamente nuevo: Utility, que incorpora comandos adicionales para facilitar la gestión del bot de soporte.
+
+## Plugin Creado
+
+### Utility
+
+Plugin desarrollado desde cero. Incluye los siguientes comandos:
+- `/say`- Envía un mensaje como el bot.
+- `/embed` - Crea y envía un mensaje embed personalizado.
+- `/sync` - Sincroniza los comandos de aplicación del bot.
 
 ## Links
 
