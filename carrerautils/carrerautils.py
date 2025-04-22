@@ -11,6 +11,9 @@ from urllib.parse import urlparse
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+from core.models import PermissionLevel
+from core import checks
+
 if TYPE_CHECKING:
     from bot import ModmailBot
 
@@ -41,9 +44,20 @@ class CarreraUtils(commands.Cog, name=__plugin_name__):
 
     @commands.command()
     @commands.guild_only()
-    @commands.check_any(commands.is_owner(), commands.has_permissions(administrator=True))
+    @checks.has_permissions(PermissionLevel.ADMINISTRATOR)
     @commands.bot_has_permissions(send_messages=True, read_message_history=True, attach_files=True)
     async def say(self, ctx, channel_or_message: str = None, *, message: str = None):
+        """
+        Envía un mensaje como el bot.
+
+        Este comando permite que el bot envíe un mensaje en un canal específico,
+        o en el canal actual si no se indica uno.
+
+        Es compatible con el envío de:
+        - Mensajes de texto
+        - Archivos adjuntos (imágenes, documentos, etc.)
+        - Stickers (si la implementación lo permite)
+        """
         if not (channel_or_message or message or ctx.message.attachments or ctx.message.stickers):
             return await ctx.reply(
                 content=(
@@ -107,9 +121,15 @@ class CarreraUtils(commands.Cog, name=__plugin_name__):
 
     @commands.command()
     @commands.guild_only()
-    @commands.check_any(commands.is_owner(), commands.has_permissions(administrator=True))
+    @checks.has_permissions(PermissionLevel.ADMINISTRATOR)
     @commands.bot_has_permissions(send_messages=True, read_message_history=True)
     async def sync(self, ctx):
+        """
+        Sincroniza los comandos de aplicación (slash commands) del bot con la API de Discord.
+
+        Este comando es útil cuando se han realizado cambios en el árbol de comandos,
+        como añadir o eliminar comandos de aplicación.
+        """
         try:
             await self.bot.tree.sync()
         except:
@@ -119,9 +139,26 @@ class CarreraUtils(commands.Cog, name=__plugin_name__):
 
     @commands.command()
     @commands.guild_only()
-    @commands.check_any(commands.is_owner(), commands.has_permissions(administrator=True))
+    @checks.has_permissions(PermissionLevel.ADMINISTRATOR)
     @commands.bot_has_permissions(send_messages=True, read_message_history=True, embed_links=True)
     async def embed(self, ctx, channel: discord.TextChannel = None):
+        """
+        Inicia un proceso interactivo para crear un embed.
+
+        Este comando guía al usuario paso a paso para construir un mensaje embed,
+        permitiendo personalizar los siguientes campos:
+        - Autor (con icono opcional)
+        - Título
+        - Descripción
+        - Color (se aceptan formatos hex, 0xhex y rgb)
+        - Imagen
+        - Miniatura (thumbnail)
+        - Pie de página (footer, con icono opcional)
+
+        Los pasos pueden saltarse escribiendo `skip`.
+
+        Si no se especifica un canal, el embed se enviará en el canal actual.
+        """
         colour = commands.ColourConverter
         if channel is None:
             channel = ctx.channel
